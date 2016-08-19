@@ -26,6 +26,11 @@ body {
   margin-top:4px;
 }
 
+.pet-table {
+  //max-height: 300px;
+  //overflow-y: scroll;
+}
+
 /* SPINNER */
 .spinner {
 	width: 100px;
@@ -49,3 +54,27 @@ body {
     to { transform: scale(1) rotate(360deg);}
 }
 
+/* TABLE FIX*/
+.custom-tbody.table>tbody+tbody {
+  border-top: 1px solid #ddd;
+}
+.custom-tbody.table-striped>tbody:nth-of-type(odd){
+  border:none;
+}
+.custom-tbody.table-striped>tbody:nth-of-type(odd)>tr{
+  background-color:#FFF !important
+}
+.custom-tbody.table-striped>tbody>tr>td.pet-breakdown {
+  border: none;
+}
+
+
+.pet-breakdown img {
+  margin-top:20px;
+  border-radius: 200px;
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}

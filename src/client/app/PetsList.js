@@ -76,8 +76,8 @@ class PetsList extends React.Component {
                 </div>
 
             	{/* Filtered Pets Table */}
-                <div className="col-md-10">
-	                <table className="table table-striped table-hover">
+                <div className="pet-table">
+	                <table className="custom-tbody table table-striped">
 						<thead>
 							<tr>
 								<td><strong>Pet #</strong></td>
@@ -88,11 +88,9 @@ class PetsList extends React.Component {
 								<td><strong>Size</strong></td>
 							</tr>
 						</thead>
-						<tbody>
-		                    {filteredPets.map((pet) => {
-		                        return <Pet pet={pet} key={pet.id.$t} />
-		                    })}
-	                    </tbody>
+	                    {filteredPets.map((pet) => {
+	                        return <Pet pet={pet} key={pet.id.$t} />
+	                    })}
 	                </table>
                 </div>
 
@@ -105,23 +103,23 @@ class PetsList extends React.Component {
 					<form onSubmit={this.addPet.bind(this)}>
 
 						{/* Animal Type */}
-						<span className="col-md-2">
+						<div className="col-md-2">
 							<label htmlFor="animal">Animal </label>
 							<select className="form-control" id="animal" ref="animal" required>
 								<option value=""></option>
 								<option value="Dog">Dog</option>
 								<option value="Cat">Cat</option>
 							</select>
-						</span>
+						</div>
 
 						{/* Animal Name */}
-						<span className="col-md-3">
+						<div className="col-md-3">
 							<label htmlFor="animalName">Name </label>
 							<input id="animalName" min="2" max="25" name="age" pattern="^[a-zA-Z ]*$" type="text" ref="name" className="form-control" required></input>
-						</span>
+						</div>
 
 						{/* Animal Age */}
-						<span className="col-md-2">
+						<div className="col-md-2">
 							<label htmlFor="animalAge">Age </label>
 							<select className="form-control" id="animalAge" ref="age" required>
 								<option value=""></option>
@@ -130,20 +128,20 @@ class PetsList extends React.Component {
 								<option value="Adult">Adult</option>
 								<option value="Senoir">Senior</option>
 							</select>
-						</span>
+						</div>
 
 						{/* Animal Gender */}
-						<span className="col-md-2">
+						<div className="col-md-2">
 							<label htmlFor="animalSex">Sex</label>
 							<select className="form-control" id="animalSex" ref="sex" required>
 								<option value=""></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 							</select>
-						</span>
+						</div>
 
 						{/* Animal Size */}
-						<span className="col-md-2">
+						<div className="col-md-2">
 							<label htmlFor="animalSize">Size </label>
 							<select className="form-control" id="animalSize" ref="size" required>
 								<option value=""></option>
@@ -151,11 +149,11 @@ class PetsList extends React.Component {
 								<option value="M">Medium</option>
 								<option value="L">Large</option>
 							</select>
-						</span>
-						<span className="col-md-10">
+						</div>
+						<div className="col-md-10">
 						<br />
 							<button type="submit" className="btn my-btn btn-primary">Add New Pet</button>
-						</span>
+						</div>
 					</form>
 		        </div>
             </div>

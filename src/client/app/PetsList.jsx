@@ -90,17 +90,20 @@ class PetsList extends React.Component {
 								<td><strong>Age</strong></td>
 								<td><strong>Sex</strong></td>
 								<td><strong>Size</strong></td>
+								<td><strong></strong></td>
 							</tr>
 						</thead>
 	                    {filteredPets.map((pet) => {
 	                        return <Pet pet={pet} key={pet.id.$t} />
 	                    })}
 	                </table>
-                </div>
+					<button type="button" onClick={this.props.loadPetsFromServer} className="btn my-btn btn-lg btn-primary">Load More</button>
+            </div>
 
 
             	{/* Add Pet Form */}
                 <div className="col-md-10 page-header">
+                	<br /><br /><br /><br />
 		            <h1>Pet Entry</h1>
 		        </div>
 		        <div className="col-md-10 pet-entry-form">
@@ -154,7 +157,6 @@ class PetsList extends React.Component {
 							<br />
 						</div>
 
-
 						{/* Animal Age */}
 						<div className="col-md-3">
 							<label htmlFor="animalAge">Age </label>
@@ -191,8 +193,8 @@ class PetsList extends React.Component {
 							<br />
 						</div>
 						<div className="col-md-10">
-						<br />
-							<button type="submit" className="btn my-btn btn-primary">Add New Pet</button>
+							<br />
+							<button type="submit" className="btn my-btn btn-lg btn-primary">Add New Pet</button>
 						</div>
 					</form>
 		        </div>

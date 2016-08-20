@@ -1,12 +1,13 @@
-Notes:
+NOTES and STRUGGLES:
 
 - passing function to parent testing
 <button onClick={this.props.loadPetsFromServer.bind(this)}> More Pets</button>
 
-npm install less-loader less --save-dev
+- loaders:
+npm i extract-text-webpack-plugin
+npm install jsx-loader style-loader css-loader less-loader --save-dev
 
-
-
+- contained constant:
 const Pet1 = ({pet}) =>
   <tr >
     <td><span>{pet.id.$t}</span></td>
@@ -16,3 +17,6 @@ const Pet1 = ({pet}) =>
     <td><span>{pet.sex.$t}</span></td>
     <td><span>{pet.size.$t}</span></td>
   </tr>
+
+- MUST BE LISTENER NOT "" STRINGS!!!!
+onClick={this.loadPetsFromServer}

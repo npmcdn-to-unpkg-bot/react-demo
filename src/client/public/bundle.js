@@ -89,16 +89,12 @@
 	        value: function loadPetsFromServer(event) {
 	            var _this2 = this;
 	
-	            //if function called from child, lets add to array
-	            if (this.state.loaded) {
-	                this.setState({
-	                    add: true
-	                });
-	            }
 	            //build out api from defined props
 	            var requestParams = {};
 	            requestParams.key = this.props.unique_key;
-	            requestParams.location = this.props.location;
+	            //random zip code for fun, and dup keys are scary
+	            var randomZips = ["60192", "90210", "10001", "73301", "60067", "97001", "32003"];
+	            requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
 	            requestParams.format = this.props.format;
 	            var esc = encodeURIComponent,
 	                query = Object.keys(requestParams).map(function (k) {
@@ -106,15 +102,26 @@
 	            }).join('&'),
 	                url = this.props.uri + query;
 	
+	            //if function called from child, lets add to array
+	            if (this.state.loaded) {
+	                this.setState({
+	                    add: true,
+	                    loaded: false
+	                });
+	            }
+	
 	            $.ajax({
 	                url: url,
 	                dataType: 'jsonp',
 	                success: function success(data) {
 	                    if (_this2.state.add) {
-	                        _this2.setState(function (state) {
-	                            return {
-	                                data: state.data.concat(data.petfinder.pets)
-	                            };
+	                        var newPets = [];
+	                        newPets.push.apply(newPets, _this2.state.data.pet);
+	                        newPets.push.apply(newPets, data.petfinder.pets.pet);
+	                        //set new array to state.pet
+	                        _this2.setState({
+	                            data: Object.assign({ pet: newPets }),
+	                            loaded: true
 	                        });
 	                    } else {
 	                        _this2.setState({
@@ -124,6 +131,7 @@
 	                    }
 	                    console.log("this.state.data:");
 	                    console.log(_this2.state.data);
+	                    _this2.forceUpdate();
 	                },
 	                error: function error(xhr, status, err) {
 	                    console.error(_this2.props.url, status, err.toString());
@@ -143,7 +151,7 @@
 	            console.log("this.state.loaded: " + this.state.loaded);
 	            //load page after stat has value
 	            if (this.state.loaded) {
-	                return _react2.default.createElement(_PetsList2.default, { pets: this.state.data, loadPetsFromServer: this.loadPetsFromServer });
+	                return _react2.default.createElement(_PetsList2.default, { pets: this.state.data, loadPetsFromServer: this.loadPetsFromServer.bind(this) });
 	            }
 	            //spinner until state has value
 	            return _react2.default.createElement(
@@ -157,7 +165,7 @@
 	    return App;
 	}(_react2.default.Component);
 	
-	(0, _reactDom.render)(_react2.default.createElement(App, { uri: 'http://api.petfinder.com/pet.find?', unique_key: '6b0b0e4ca007882e03ce7d5e3ad6bf2b', location: '60192', format: 'json',
+	(0, _reactDom.render)(_react2.default.createElement(App, { uri: 'http://api.petfinder.com/pet.find?', unique_key: '6b0b0e4ca007882e03ce7d5e3ad6bf2b', format: 'json',
 	    pollInterval: 2000 }), document.getElementById('app'));
 
 /***/ },
@@ -22276,17 +22284,31 @@
 											null,
 											'Size'
 										)
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement('strong', null)
 									)
 								)
 							),
 							filteredPets.map(function (pet) {
 								return _react2.default.createElement(_Pet2.default, { pet: pet, key: pet.id.$t });
 							})
+						),
+						_react2.default.createElement(
+							'button',
+							{ type: 'button', onClick: this.props.loadPetsFromServer, className: 'btn my-btn btn-lg btn-primary' },
+							'Load More'
 						)
 					),
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-md-10 page-header' },
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'h1',
 							null,
@@ -22493,7 +22515,7 @@
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'button',
-									{ type: 'submit', className: 'btn my-btn btn-primary' },
+									{ type: 'submit', className: 'btn my-btn btn-lg btn-primary' },
 									'Add New Pet'
 								)
 							)
@@ -22670,7 +22692,8 @@
 					null,
 					_react2.default.createElement(
 						'td',
-						{ colSpan: '6', className: 'pet-breakdown' },
+						{ colSpan: '7', className: 'pet-breakdown' },
+						_react2.default.createElement('a', { className: 'breakdown-toggle glyphicon glyphicon-chevron-up close-chevron', href: 'javascript:;', onClick: this.props.petInfoClick }),
 						_react2.default.createElement(
 							'span',
 							{ className: 'col-md-2' },
@@ -22749,8 +22772,8 @@
 		_createClass(Pet, [{
 			key: 'petInfoClick',
 			value: function petInfoClick() {
+				//toggle pet info breakdown
 				if (this.state.showPetInfo) {
-					this.setState({ showPetInfo: false });
 					this.setState({ showPetInfo: false });
 				} else {
 					this.setState({ showPetInfo: true });
@@ -22759,12 +22782,17 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				//messing around with toggle classes
+				var style = {};
+				if (this.state.showPetInfo) {
+					style.display = 'none';
+				}
 				return _react2.default.createElement(
 					'tbody',
 					null,
 					_react2.default.createElement(
 						'tr',
-						{ onClick: this.petInfoClick.bind(this) },
+						{ style: style },
 						_react2.default.createElement(
 							'td',
 							null,
@@ -22818,9 +22846,14 @@
 								null,
 								this.props.pet.size.$t
 							)
+						),
+						_react2.default.createElement(
+							'td',
+							null,
+							_react2.default.createElement('a', { className: 'breakdown-toggle glyphicon glyphicon-chevron-down open-chevron', href: 'javascript:;', onClick: this.petInfoClick.bind(this) })
 						)
 					),
-					this.state.showPetInfo ? _react2.default.createElement(PetInfo, { pet: this.props.pet }) : null
+					this.state.showPetInfo ? _react2.default.createElement(PetInfo, { pet: this.props.pet, petInfoClick: this.petInfoClick.bind(this) }) : null
 				);
 			}
 		}]);

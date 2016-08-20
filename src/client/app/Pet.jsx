@@ -86,7 +86,8 @@ class PetInfo extends React.Component {
    	render() {
         return (
             <tr>
-	            <td colSpan="6" className="pet-breakdown">
+	            <td colSpan="7" className="pet-breakdown">
+	            	<a className="breakdown-toggle glyphicon glyphicon-chevron-up close-chevron" href="javascript:;" onClick={this.props.petInfoClick}></a>
 	            	<span className="col-md-2">
 	            		<PetImage source={this.props.pet.media.photos.photo[0].$t} />
 	               	</span>
@@ -120,25 +121,32 @@ class Pet extends React.Component {
 	    };
     }
     petInfoClick() {
+    	//toggle pet info breakdown
     	if(this.state.showPetInfo) {
-    		this.setState({ showPetInfo: false });
     		this.setState({ showPetInfo: false });
     	} else {
         	this.setState({ showPetInfo: true });
         }
     }
     render() {
+    	//messing around with toggle classes
+		var style = {};
+		if (this.state.showPetInfo) {
+			style.display = 'none'
+		}
         return (
         	<tbody>
-				<tr onClick={this.petInfoClick.bind(this)}>
+				<tr style={style}>
 					<td><span>{this.props.pet.id.$t}</span></td>
 					<td><span>{this.props.pet.animal.$t}</span></td>
 					<td><span>{this.props.pet.name.$t}</span></td>
 					<td><span>{this.props.pet.age.$t}</span></td>
 					<td><span>{this.props.pet.sex.$t}</span></td>
 					<td><span>{this.props.pet.size.$t}</span></td>
+					<td><a className="breakdown-toggle glyphicon glyphicon-chevron-down open-chevron" href="javascript:;" onClick={this.petInfoClick.bind(this)}></a></td>
 				</tr>
-				{this.state.showPetInfo ? <PetInfo pet={this.props.pet}/> : null}
+				{/* .bind(this) to pass state!!! */}
+				{this.state.showPetInfo ? <PetInfo pet={this.props.pet} petInfoClick={this.petInfoClick.bind(this)}/> : null}
 			</tbody>
         )
     }

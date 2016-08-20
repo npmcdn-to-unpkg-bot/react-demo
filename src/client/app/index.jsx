@@ -2,6 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import PetsList from './PetsList.jsx';
 
+
+
 class App extends React.Component {
     constructor() {
         super();
@@ -11,31 +13,41 @@ class App extends React.Component {
         }
     }
     loadPetsFromServer(event) {
-        //if function called from child, lets add to array
-        if(this.state.loaded){
-             this.setState({
-                add: true
-             });
-        }
         //build out api from defined props
         var requestParams = {};
         requestParams.key = this.props.unique_key;
-        requestParams.location = this.props.location;
+        //random zip code for fun, and dup keys are scary
+        var randomZips = ["60192","90210","10001","73301","60067", "97001", "32003"];
+        requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
         requestParams.format = this.props.format;
         var esc = encodeURIComponent,
             query = Object.keys(requestParams)
                 .map(k => esc(k) + '=' + esc(requestParams[k]))
                 .join('&'),
             url = this.props.uri + query;
+        
+        //if function called from child, lets add to array
+        if(this.state.loaded){
+             this.setState({
+                add: true,
+                loaded: false
+             });
+        }
 
         $.ajax({
             url: url,
             dataType: 'jsonp',
             success: (data) => {
                 if(this.state.add){
-                    this.setState((state) => ({ 
-                        data: state.data.concat(data.petfinder.pets)
-                    }))
+                    var newPets = [];
+                    newPets.push.apply(newPets, this.state.data.pet);
+                    newPets.push.apply(newPets, data.petfinder.pets.pet);
+                    //set new array to state.pet
+                    this.setState({
+                        data: Object.assign({pet: newPets}),
+                        loaded: true
+                    });
+                    
                     
                 } else {
                     this.setState({
@@ -45,6 +57,7 @@ class App extends React.Component {
                 }
                 console.log("this.state.data:");
                 console.log(this.state.data);
+                this.forceUpdate();
             },
                 error: (xhr, status, err) => {
                 console.error(this.props.url, status, err.toString());
@@ -63,7 +76,7 @@ class App extends React.Component {
         //load page after stat has value
         if(this.state.loaded){
             return (
-                <PetsList pets={this.state.data} loadPetsFromServer={this.loadPetsFromServer}/>
+                <PetsList pets={this.state.data} loadPetsFromServer={this.loadPetsFromServer.bind(this)}/>
             ) 
         }
         //spinner until state has value
@@ -78,6 +91,6 @@ class App extends React.Component {
 
 
 render(
-    <App uri="http://api.petfinder.com/pet.find?" unique_key="6b0b0e4ca007882e03ce7d5e3ad6bf2b" location="60192" format="json"
+    <App uri="http://api.petfinder.com/pet.find?" unique_key="6b0b0e4ca007882e03ce7d5e3ad6bf2b" format="json"
     pollInterval={2000}/>, document.getElementById('app')
 );

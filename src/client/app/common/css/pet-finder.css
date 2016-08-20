@@ -61,10 +61,10 @@ body {
 .custom-tbody.table-striped>tbody:nth-of-type(odd){
   border:none;
 }
-.custom-tbody.table-striped>tbody>tr:first-child:hover{
-  cursor: pointer;
-  background-color:#EEE !important
-}
+//.custom-tbody.table-striped>tbody>tr:first-child:hover{
+// cursor: pointer;
+//  background-color:#EEE !important
+//}
 .custom-tbody.table-striped>tbody:nth-of-type(odd)>tr{
   background-color:#FFF !important
 }
@@ -74,6 +74,8 @@ body {
 }
 
 /* INDIV PET INFO*/
+.hidden { display:none; }
+
 .pet-breakdown img {
   margin-top:20px;
   max-width: 100%;
@@ -98,9 +100,39 @@ body {
 .pet-breakdown h4 {
   margin-top:20px;
 }
-
+a.breakdown-toggle {
+  font-size:20px;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border:2px solid #eee;
+  text-align: center;
+  border-radius: 50%;
+  z-index: 100;
+  color:#7130D2;
+  transition: background-color 0.5s ease;
+}
+a.breakdown-toggle.open-chevron {
+  line-height: 40px;
+}
+a.breakdown-toggle.close-chevron {
+  line-height: 36px;
+}
+a.breakdown-toggle:hover {
+  text-decoration: none;
+  background-color: #eee8f3;
+  color: #551a8b;
+}
 
 /* PET ENTRY FORM */
 .pet-entry-form select.form-control {
   width:auto;
+}
+.pet-entry-form {
+  border: 2px solid #EEE;
+  padding: 0 0 15px 0;
+}
+.pet-entry-form .page-header {
+  margin:10px 0 20px;
+}
 }

@@ -57,7 +57,7 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 35);
 	
-	var _PetsList = __webpack_require__(/*! ./PetsList.js */ 175);
+	var _PetsList = __webpack_require__(/*! ./PetsList.jsx */ 175);
 	
 	var _PetsList2 = _interopRequireDefault(_PetsList);
 	
@@ -22090,9 +22090,9 @@
 
 /***/ },
 /* 175 */
-/*!************************************!*\
-  !*** ./src/client/app/PetsList.js ***!
-  \************************************/
+/*!*************************************!*\
+  !*** ./src/client/app/PetsList.jsx ***!
+  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22107,13 +22107,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Pet = __webpack_require__(/*! ./Pet */ 176);
+	var _Pet = __webpack_require__(/*! ./Pet.jsx */ 176);
 	
 	var _Pet2 = _interopRequireDefault(_Pet);
-	
-	var _PetHeader = __webpack_require__(/*! ./PetHeader */ 177);
-	
-	var _PetHeader2 = _interopRequireDefault(_PetHeader);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22180,6 +22176,11 @@
 				this.refs.age.value = "";
 				this.refs.sex.value = "";
 				this.refs.size.value = "";
+	
+				//scroll up to show new entry
+				$('html, body').animate({
+					scrollTop: $('#app').offset().top
+				}, 500);
 			}
 		}, {
 			key: 'updateSearch',
@@ -22294,13 +22295,86 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'col-md-10' },
+						{ className: 'col-md-10 pet-entry-form' },
 						_react2.default.createElement(
 							'form',
 							{ onSubmit: this.addPet.bind(this) },
 							_react2.default.createElement(
 								'div',
+								{ className: 'col-md-10 page-header' },
+								_react2.default.createElement(
+									'h4',
+									null,
+									'Contact Information'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-5' },
+								_react2.default.createElement(
+									'label',
+									{ htmlFor: 'contactName' },
+									'Full Name'
+								),
+								_react2.default.createElement('input', { id: 'contactName', min: '2', max: '25', name: 'contactname', pattern: '^[a-zA-Z ]*$', type: 'text', ref: 'contactname', className: 'form-control', required: true }),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-5' },
+								_react2.default.createElement(
+									'label',
+									{ htmlFor: 'contactEmail' },
+									'Email'
+								),
+								_react2.default.createElement('input', { id: 'contactEmail', min: '2', max: '45', name: 'contactemail', type: 'email', ref: 'contactemail', className: 'form-control', required: true }),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-8' },
+								_react2.default.createElement(
+									'label',
+									{ htmlFor: 'contactCity' },
+									'City'
+								),
+								_react2.default.createElement('input', { id: 'contactCity', min: '2', max: '45', name: 'contactcity', type: 'text', ref: 'contactcity', className: 'form-control', required: true }),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
 								{ className: 'col-md-2' },
+								_react2.default.createElement(
+									'label',
+									{ htmlFor: 'contactZip' },
+									'Zip Code'
+								),
+								_react2.default.createElement('input', { id: 'contactZip', name: 'contactzip', type: 'number', ref: 'contactzip', className: 'form-control', required: true }),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-10 page-header' },
+								_react2.default.createElement(
+									'h4',
+									null,
+									'Pet Information'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-7' },
+								_react2.default.createElement(
+									'label',
+									{ htmlFor: 'animalName' },
+									'Animal Name '
+								),
+								_react2.default.createElement('input', { id: 'animalName', min: '2', max: '25', name: 'age', pattern: '^[a-zA-Z ]*$', type: 'text', ref: 'name', className: 'form-control', required: true }),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-3' },
 								_react2.default.createElement(
 									'label',
 									{ htmlFor: 'animal' },
@@ -22320,21 +22394,12 @@
 										{ value: 'Cat' },
 										'Cat'
 									)
-								)
+								),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
 								{ className: 'col-md-3' },
-								_react2.default.createElement(
-									'label',
-									{ htmlFor: 'animalName' },
-									'Name '
-								),
-								_react2.default.createElement('input', { id: 'animalName', min: '2', max: '25', name: 'age', pattern: '^[a-zA-Z ]*$', type: 'text', ref: 'name', className: 'form-control', required: true })
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-md-2' },
 								_react2.default.createElement(
 									'label',
 									{ htmlFor: 'animalAge' },
@@ -22364,11 +22429,12 @@
 										{ value: 'Senoir' },
 										'Senior'
 									)
-								)
+								),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-2' },
+								{ className: 'col-md-3' },
 								_react2.default.createElement(
 									'label',
 									{ htmlFor: 'animalSex' },
@@ -22388,11 +22454,12 @@
 										{ value: 'F' },
 										'Female'
 									)
-								)
+								),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-2' },
+								{ className: 'col-md-3' },
 								_react2.default.createElement(
 									'label',
 									{ htmlFor: 'animalSize' },
@@ -22417,7 +22484,8 @@
 										{ value: 'L' },
 										'Large'
 									)
-								)
+								),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
@@ -22442,12 +22510,12 @@
 
 /***/ },
 /* 176 */
-/*!*******************************!*\
-  !*** ./src/client/app/Pet.js ***!
-  \*******************************/
+/*!********************************!*\
+  !*** ./src/client/app/Pet.jsx ***!
+  \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -22478,12 +22546,10 @@
 	
 			if (Array.isArray(_this.props.pet.breeds.breed)) {
 				_this.state = {
-					id: _this.props.pet.id,
 					breeds: _this.props.pet.breeds.breed
 				};
 			} else {
 				_this.state = {
-					id: _this.props.pet.id.$t,
 					breed: _this.props.pet.breeds.breed
 				};
 			}
@@ -22491,21 +22557,20 @@
 		}
 	
 		_createClass(Breeds, [{
-			key: "render",
+			key: 'render',
 			value: function render() {
 				if (this.state.breeds) {
-					var petid = this.state.id.$t;
 					return _react2.default.createElement(
-						"h4",
+						'h4',
 						null,
 						_react2.default.createElement(
-							"ul",
-							{ className: "list-unstyled" },
-							this.state.breeds.map(function (breed, petid) {
-								//set petId as uniqye key
+							'ul',
+							{ className: 'list-unstyled' },
+							this.state.breeds.map(function (breed, index) {
+								//set petId as unique key
 								return _react2.default.createElement(
-									"li",
-									{ key: petid },
+									'li',
+									{ key: index },
 									breed.$t
 								);
 							})
@@ -22513,8 +22578,8 @@
 					);
 				} else {
 					return _react2.default.createElement(
-						"h4",
-						{ key: this.state.id },
+						'h4',
+						null,
 						this.state.breed.$t
 					);
 				}
@@ -22526,8 +22591,70 @@
 	
 	;
 	
-	var PetInfo = function (_React$Component2) {
-		_inherits(PetInfo, _React$Component2);
+	var PetImage = function (_React$Component2) {
+		_inherits(PetImage, _React$Component2);
+	
+		function PetImage(props) {
+			_classCallCheck(this, PetImage);
+	
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PetImage).call(this, props));
+	
+			_this2.state = {
+				imgsrc: _this2.props.source,
+				imgstatus: 'loading'
+			};
+			return _this2;
+		}
+	
+		_createClass(PetImage, [{
+			key: 'handleImageLoaded',
+			value: function handleImageLoaded() {
+				this.setState({ imgstatus: 'loaded' });
+			}
+		}, {
+			key: 'handleImageErrored',
+			value: function handleImageErrored() {
+				this.setState({ imgstatus: 'failed to load' });
+			}
+		}, {
+			key: 'renderSpinner',
+			value: function renderSpinner() {
+				if (this.state.imgstatus !== 'loading') {
+					//after image loaded, lets remove spinner
+					return null;
+				}
+				return _react2.default.createElement(
+					'div',
+					{ className: 'spinner' },
+					_react2.default.createElement('span', { className: 'glyphicon glyphicon-refresh glyphicon-refresh-animate' })
+				);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				//lets clean up the image url, CANNOT USE SET STATE in render 
+				if (this.state.imgsrc) {
+					var newSource = this.state.imgsrc;
+					newSource = newSource.substring(0, newSource.length - 18).concat(".jpg");
+				}
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.renderSpinner(),
+					_react2.default.createElement('img', {
+						src: newSource,
+						onLoad: this.handleImageLoaded.bind(this),
+						onError: this.handleImageErrored.bind(this),
+						width: '150', height: '150' })
+				);
+			}
+		}]);
+	
+		return PetImage;
+	}(_react2.default.Component);
+	
+	var PetInfo = function (_React$Component3) {
+		_inherits(PetInfo, _React$Component3);
 	
 		function PetInfo(props) {
 			_classCallCheck(this, PetInfo);
@@ -22536,52 +22663,62 @@
 		}
 	
 		_createClass(PetInfo, [{
-			key: "render",
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"tr",
+					'tr',
 					null,
 					_react2.default.createElement(
-						"td",
-						{ colSpan: "6", className: "pet-breakdown" },
+						'td',
+						{ colSpan: '6', className: 'pet-breakdown' },
 						_react2.default.createElement(
-							"span",
-							{ className: "col-md-2" },
-							_react2.default.createElement("img", { src: this.props.pet.media.photos.photo[0].$t, width: "120", height: "120" })
+							'span',
+							{ className: 'col-md-2' },
+							_react2.default.createElement(PetImage, { source: this.props.pet.media.photos.photo[0].$t })
 						),
 						_react2.default.createElement(
-							"span",
-							{ className: "col-md-7" },
+							'span',
+							{ className: 'col-md-7' },
 							_react2.default.createElement(
-								"h2",
+								'h2',
 								null,
-								this.props.pet.name.$t
+								this.props.pet.name.$t,
+								' - id#',
+								this.props.pet.id.$t
 							),
 							_react2.default.createElement(Breeds, { pet: this.props.pet }),
 							_react2.default.createElement(
-								"p",
+								'p',
 								null,
 								this.props.pet.description.$t
 							)
 						),
 						_react2.default.createElement(
-							"span",
-							{ className: "col-md-3" },
+							'span',
+							{ className: 'col-md-3' },
 							_react2.default.createElement(
-								"h4",
+								'h4',
 								null,
-								"Contact Info"
+								'Contact Info'
 							),
 							_react2.default.createElement(
-								"ul",
-								null,
-								_react2.default.createElement(
-									"li",
-									null,
-									this.props.pet.contact.address1.$t
-								),
-								_react2.default.createElement("li", null),
-								_react2.default.createElement("li", null)
+								'ul',
+								{ className: 'list-unstyled' },
+								Object.keys(this.props.pet.contact).map(function (key, id) {
+									if (!!this.props.pet.contact[key].$t) {
+										return _react2.default.createElement(
+											'li',
+											{ key: id },
+											_react2.default.createElement(
+												'strong',
+												null,
+												key,
+												': '
+											),
+											this.props.pet.contact[key].$t
+										);
+									}
+								}, this)
 							)
 						)
 					)
@@ -22594,87 +22731,90 @@
 	
 	;
 	
-	var Pet = function (_React$Component3) {
-		_inherits(Pet, _React$Component3);
+	var Pet = function (_React$Component4) {
+		_inherits(Pet, _React$Component4);
 	
 		function Pet(props) {
 			_classCallCheck(this, Pet);
 	
 			//carry prop from parent into current state
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Pet).call(this, props));
+			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Pet).call(this, props));
 	
-			_this3.state = {
+			_this4.state = {
 				showPetInfo: false
 			};
-			return _this3;
+			return _this4;
 		}
 	
 		_createClass(Pet, [{
-			key: "petInfoClick",
+			key: 'petInfoClick',
 			value: function petInfoClick() {
-				this.setState({
-					showPetInfo: true
-				});
+				if (this.state.showPetInfo) {
+					this.setState({ showPetInfo: false });
+					this.setState({ showPetInfo: false });
+				} else {
+					this.setState({ showPetInfo: true });
+				}
 			}
 		}, {
-			key: "render",
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"tbody",
+					'tbody',
 					null,
 					_react2.default.createElement(
-						"tr",
+						'tr',
 						{ onClick: this.petInfoClick.bind(this) },
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.id.$t
 							)
 						),
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.animal.$t
 							)
 						),
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.name.$t
 							)
 						),
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.age.$t
 							)
 						),
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.sex.$t
 							)
 						),
 						_react2.default.createElement(
-							"td",
+							'td',
 							null,
 							_react2.default.createElement(
-								"span",
+								'span',
 								null,
 								this.props.pet.size.$t
 							)
@@ -22689,71 +22829,6 @@
 	}(_react2.default.Component);
 	
 	exports.default = Pet;
-
-/***/ },
-/* 177 */
-/*!*************************************!*\
-  !*** ./src/client/app/PetHeader.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PetHeader = function (_React$Component) {
-		_inherits(PetHeader, _React$Component);
-	
-		function PetHeader(props) {
-			_classCallCheck(this, PetHeader);
-	
-			//carry prop from parent into current state
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PetHeader).call(this, props));
-			//prop required or undef
-	
-	
-			_this.state = {
-				search: ''
-			};
-			return _this;
-		}
-	
-		_createClass(PetHeader, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'page-header' },
-					_react2.default.createElement('div', { className: 'pet-finder-logo' }),
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-md-4 search' },
-						_react2.default.createElement('input', { placeholder: 'Search by Pet #', type: 'text', value: this.state.search, onChange: this.updateSearch.bind(this), className: 'form-control' })
-					)
-				);
-			}
-		}]);
-	
-		return PetHeader;
-	}(_react2.default.Component);
-	
-	exports.default = PetHeader;
 
 /***/ }
 /******/ ]);

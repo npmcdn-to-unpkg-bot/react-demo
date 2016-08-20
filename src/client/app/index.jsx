@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import PetsList from './PetsList.js';
+import PetsList from './PetsList.jsx';
 
 class App extends React.Component {
     constructor() {

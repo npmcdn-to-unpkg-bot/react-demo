@@ -13,6 +13,10 @@ class PetsList extends React.Component {
         
     }
 
+    updateSearch(event) {
+        this.setState({search: event.target.value.substr(0, 20)});
+    }
+
     addPet(event) {
 		event.preventDefault();
 		var min=10000000, max=39999999;
@@ -22,6 +26,14 @@ class PetsList extends React.Component {
 		let age = this.refs.age.value;
 		let sex = this.refs.sex.value;
 		let size = this.refs.size.value;
+		let breed = this.refs.breed.value;
+		let description = this.refs.description.value;
+
+		let contactname = this.refs.contactname.value;
+        let contactemail = this.refs.contactemail.value;
+        let contactcity = this.refs.contactcity.value;
+        let contactzip = this.refs.contactzip.value;
+		let image = "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg";
 		
 		console.log("AddPet - Info: " + id + " " + animal + " " +
 			name + " " + age + " " + sex + " " + size )
@@ -33,7 +45,26 @@ class PetsList extends React.Component {
 				"name":{"$t":name},
 	            "age":{"$t":age},
 	            "sex":{"$t":sex},
-	            "size":{"$t":size}
+	            "size":{"$t":size},
+	            "breeds":{  
+	               "breed":{"$t":breed},
+	            },
+	            "contact":{  
+               		"name":{"$t":contactname},
+               		"email":{"$t":contactemail},
+               		"city":{"$t":contactcity},
+               		"name":{"$t":contactzip}
+               	},
+               	"media":{  
+               		"photos":{  
+                  		"photo":[{  
+	                        "@size":"pnt",
+	                        "$t":"http://i.ytimg.com/vi/icqDxNab3Do/maxresdefault-2341241223422.jpg",
+	                        "@id":"1"
+	                    }]
+	                }
+	            },
+	            "description":{"$t":description}
 			}]
 		}
 		//combine old data with new entry
@@ -49,16 +80,19 @@ class PetsList extends React.Component {
         this.refs.age.value = "";
         this.refs.sex.value = "";
         this.refs.size.value = "";
+        this.refs.breed.value = "";
+        this.refs.description.value = "";
+
+        this.refs.contactname.value = "";
+        this.refs.contactemail.value = "";
+        this.refs.contactcity.value = "";
+        this.refs.contactzip.value = "";
 
         //scroll up to show new entry
         $('html, body').animate({
 			scrollTop: $('#app').offset().top
         }, 500);
 	}
-
-    updateSearch(event) {
-        this.setState({search: event.target.value.substr(0, 20)});
-    }   
 
     render() {
     	//loop thru by pet id
@@ -139,58 +173,73 @@ class PetsList extends React.Component {
 						<div className="col-md-10 page-header">
 				            <h4>Pet Information</h4>
 				        </div>
+
 						{/* Animal Name */}
 						<div className="col-md-7">
 							<label htmlFor="animalName">Animal Name </label>
-							<input id="animalName" min="2" max="25" name="age" pattern="^[a-zA-Z ]*$" type="text" ref="name" className="form-control" required></input>
+							<input id="animalName" min="2" max="25" name="name" type="text" ref="name" className="form-control" required></input>
 							<br />
 						</div>
 
-						{/* Animal Type */}
-						<div className="col-md-3">
-							<label htmlFor="animal">Animal </label>
-							<select className="form-control" id="animal" ref="animal" required>
-								<option value=""></option>
-								<option value="Dog">Dog</option>
-								<option value="Cat">Cat</option>
-							</select>
+						{/* Animal Breed */}
+						<div className="col-md-7">
+							<label htmlFor="animalBreed">Animal Breed</label>
+							<input id="animalBreed" min="2" max="25" name="breed" pattern="^[a-zA-Z ]*$" type="text" ref="breed" className="form-control" required></input>
 							<br />
 						</div>
 
-						{/* Animal Age */}
-						<div className="col-md-3">
-							<label htmlFor="animalAge">Age </label>
-							<select className="form-control" id="animalAge" ref="age" required>
-								<option value=""></option>
-								<option value="Baby">Baby</option>
-								<option value="Young">Young</option>
-								<option value="Adult">Adult</option>
-								<option value="Senoir">Senior</option>
-							</select>
+						{/* Animal Breed */}
+						<div className="col-md-7">
+							<label htmlFor="animalDesc">Description</label>
+							<textarea id="animalDesc" min="1" max="250" name="description"type="text" ref="description" className="form-control" required />
 							<br />
 						</div>
 
-						{/* Animal Gender */}
-						<div className="col-md-3">
-							<label htmlFor="animalSex">Sex</label>
-							<select className="form-control" id="animalSex" ref="sex" required>
-								<option value=""></option>
-								<option value="M">Male</option>
-								<option value="F">Female</option>
-							</select>
-							<br />
-						</div>
+						<div className="col-md-10 media">
+							{/* Animal Type */}
+							<div className="pull-left">
+								<label htmlFor="animal">Animal </label>
+								<select className="form-control" id="animal" ref="animal" required>
+									<option value=""></option>
+									<option value="Dog">Dog</option>
+									<option value="Cat">Cat</option>
+								</select>
+								<br />
+							</div>
+							{/* Animal Age */}
+							<div className="pull-left">
+								<label htmlFor="animalAge">Age </label>
+								<select className="form-control" id="animalAge" ref="age" required>
+									<option value=""></option>
+									<option value="Baby">Baby</option>
+									<option value="Young">Young</option>
+									<option value="Adult">Adult</option>
+									<option value="Senoir">Senior</option>
+								</select>
+								<br />
+							</div>
 
-						{/* Animal Size */}
-						<div className="col-md-3">
-							<label htmlFor="animalSize">Size </label>
-							<select className="form-control" id="animalSize" ref="size" required>
-								<option value=""></option>
-								<option value="S">Small</option>
-								<option value="M">Medium</option>
-								<option value="L">Large</option>
-							</select>
-							<br />
+							{/* Animal Gender */}
+							<div className="pull-left">
+								<label htmlFor="animalSex">Sex</label>
+								<select className="form-control" id="animalSex" ref="sex" required>
+									<option value=""></option>
+									<option value="M">Male</option>
+									<option value="F">Female</option>
+								</select>
+								<br />
+							</div>
+
+							{/* Animal Size */}
+							<div className="pull-left">
+								<label htmlFor="animalSize">Size </label>
+								<select className="form-control" id="animalSize" ref="size" required>
+									<option value=""></option>
+									<option value="S">Small</option>
+									<option value="M">Medium</option>
+									<option value="L">Large</option>
+								</select>
+							</div>
 						</div>
 						<div className="col-md-10">
 							<br />

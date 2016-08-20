@@ -12,20 +12,18 @@ class App extends React.Component {
             data: [] 
         }
     }
+    
     loadPetsFromServer(event) {
         //build out api from defined props
         var requestParams = {};
         requestParams.key = this.props.unique_key;
-        //random zip code for fun, and dup keys are scary
+        //random zip code for fun, && dup keys are scary
         var randomZips = ["60192","90210","10001","73301","60067", "97001", "32003"];
         requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
         requestParams.format = this.props.format;
         var esc = encodeURIComponent,
-            query = Object.keys(requestParams)
-                .map(k => esc(k) + '=' + esc(requestParams[k]))
-                .join('&'),
+            query = Object.keys(requestParams).map(k => esc(k) + '=' + esc(requestParams[k])).join('&'),
             url = this.props.uri + query;
-        
         //if function called from child, lets add to array
         if(this.state.loaded){
              this.setState({
@@ -33,7 +31,6 @@ class App extends React.Component {
                 loaded: false
              });
         }
-
         $.ajax({
             url: url,
             dataType: 'jsonp',

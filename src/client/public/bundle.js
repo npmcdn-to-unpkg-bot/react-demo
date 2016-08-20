@@ -92,7 +92,7 @@
 	            //build out api from defined props
 	            var requestParams = {};
 	            requestParams.key = this.props.unique_key;
-	            //random zip code for fun, and dup keys are scary
+	            //random zip code for fun, && dup keys are scary
 	            var randomZips = ["60192", "90210", "10001", "73301", "60067", "97001", "32003"];
 	            requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
 	            requestParams.format = this.props.format;
@@ -101,7 +101,6 @@
 	                return esc(k) + '=' + esc(requestParams[k]);
 	            }).join('&'),
 	                url = this.props.uri + query;
-	
 	            //if function called from child, lets add to array
 	            if (this.state.loaded) {
 	                this.setState({
@@ -109,7 +108,6 @@
 	                    loaded: false
 	                });
 	            }
-	
 	            $.ajax({
 	                url: url,
 	                dataType: 'jsonp',
@@ -22121,6 +22119,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22147,6 +22147,11 @@
 		}
 	
 		_createClass(PetsList, [{
+			key: 'updateSearch',
+			value: function updateSearch(event) {
+				this.setState({ search: event.target.value.substr(0, 20) });
+			}
+		}, {
 			key: 'addPet',
 			value: function addPet(event) {
 				event.preventDefault();
@@ -22158,6 +22163,14 @@
 				var age = this.refs.age.value;
 				var sex = this.refs.sex.value;
 				var size = this.refs.size.value;
+				var breed = this.refs.breed.value;
+				var description = this.refs.description.value;
+	
+				var contactname = this.refs.contactname.value;
+				var contactemail = this.refs.contactemail.value;
+				var contactcity = this.refs.contactcity.value;
+				var contactzip = this.refs.contactzip.value;
+				var image = "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg";
 	
 				console.log("AddPet - Info: " + id + " " + animal + " " + name + " " + age + " " + sex + " " + size);
 	
@@ -22168,7 +22181,25 @@
 						"name": { "$t": name },
 						"age": { "$t": age },
 						"sex": { "$t": sex },
-						"size": { "$t": size }
+						"size": { "$t": size },
+						"breeds": {
+							"breed": { "$t": breed }
+						},
+						"contact": _defineProperty({
+							"name": { "$t": contactname },
+							"email": { "$t": contactemail },
+							"city": { "$t": contactcity }
+						}, 'name', { "$t": contactzip }),
+						"media": {
+							"photos": {
+								"photo": [{
+									"@size": "pnt",
+									"$t": "http://i.ytimg.com/vi/icqDxNab3Do/maxresdefault-2341241223422.jpg",
+									"@id": "1"
+								}]
+							}
+						},
+						"description": { "$t": description }
 					}]
 				};
 				//combine old data with new entry
@@ -22184,16 +22215,18 @@
 				this.refs.age.value = "";
 				this.refs.sex.value = "";
 				this.refs.size.value = "";
+				this.refs.breed.value = "";
+				this.refs.description.value = "";
+	
+				this.refs.contactname.value = "";
+				this.refs.contactemail.value = "";
+				this.refs.contactcity.value = "";
+				this.refs.contactzip.value = "";
 	
 				//scroll up to show new entry
 				$('html, body').animate({
 					scrollTop: $('#app').offset().top
 				}, 500);
-			}
-		}, {
-			key: 'updateSearch',
-			value: function updateSearch(event) {
-				this.setState({ search: event.target.value.substr(0, 20) });
 			}
 		}, {
 			key: 'render',
@@ -22391,123 +22424,148 @@
 									{ htmlFor: 'animalName' },
 									'Animal Name '
 								),
-								_react2.default.createElement('input', { id: 'animalName', min: '2', max: '25', name: 'age', pattern: '^[a-zA-Z ]*$', type: 'text', ref: 'name', className: 'form-control', required: true }),
+								_react2.default.createElement('input', { id: 'animalName', min: '2', max: '25', name: 'name', type: 'text', ref: 'name', className: 'form-control', required: true }),
 								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-3' },
+								{ className: 'col-md-7' },
 								_react2.default.createElement(
 									'label',
-									{ htmlFor: 'animal' },
-									'Animal '
+									{ htmlFor: 'animalBreed' },
+									'Animal Breed'
 								),
-								_react2.default.createElement(
-									'select',
-									{ className: 'form-control', id: 'animal', ref: 'animal', required: true },
-									_react2.default.createElement('option', { value: '' }),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Dog' },
-										'Dog'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Cat' },
-										'Cat'
-									)
-								),
+								_react2.default.createElement('input', { id: 'animalBreed', min: '2', max: '25', name: 'breed', pattern: '^[a-zA-Z ]*$', type: 'text', ref: 'breed', className: 'form-control', required: true }),
 								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-3' },
+								{ className: 'col-md-7' },
 								_react2.default.createElement(
 									'label',
-									{ htmlFor: 'animalAge' },
-									'Age '
+									{ htmlFor: 'animalDesc' },
+									'Description'
 								),
-								_react2.default.createElement(
-									'select',
-									{ className: 'form-control', id: 'animalAge', ref: 'age', required: true },
-									_react2.default.createElement('option', { value: '' }),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Baby' },
-										'Baby'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Young' },
-										'Young'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Adult' },
-										'Adult'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'Senoir' },
-										'Senior'
-									)
-								),
+								_react2.default.createElement('textarea', { id: 'animalDesc', min: '1', max: '250', name: 'description', type: 'text', ref: 'description', className: 'form-control', required: true }),
 								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-3' },
+								{ className: 'col-md-10 media' },
 								_react2.default.createElement(
-									'label',
-									{ htmlFor: 'animalSex' },
-									'Sex'
-								),
-								_react2.default.createElement(
-									'select',
-									{ className: 'form-control', id: 'animalSex', ref: 'sex', required: true },
-									_react2.default.createElement('option', { value: '' }),
+									'div',
+									{ className: 'pull-left' },
 									_react2.default.createElement(
-										'option',
-										{ value: 'M' },
-										'Male'
+										'label',
+										{ htmlFor: 'animal' },
+										'Animal '
 									),
 									_react2.default.createElement(
-										'option',
-										{ value: 'F' },
-										'Female'
+										'select',
+										{ className: 'form-control', id: 'animal', ref: 'animal', required: true },
+										_react2.default.createElement('option', { value: '' }),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Dog' },
+											'Dog'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Cat' },
+											'Cat'
+										)
+									),
+									_react2.default.createElement('br', null)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'pull-left' },
+									_react2.default.createElement(
+										'label',
+										{ htmlFor: 'animalAge' },
+										'Age '
+									),
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', id: 'animalAge', ref: 'age', required: true },
+										_react2.default.createElement('option', { value: '' }),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Baby' },
+											'Baby'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Young' },
+											'Young'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Adult' },
+											'Adult'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'Senoir' },
+											'Senior'
+										)
+									),
+									_react2.default.createElement('br', null)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'pull-left' },
+									_react2.default.createElement(
+										'label',
+										{ htmlFor: 'animalSex' },
+										'Sex'
+									),
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', id: 'animalSex', ref: 'sex', required: true },
+										_react2.default.createElement('option', { value: '' }),
+										_react2.default.createElement(
+											'option',
+											{ value: 'M' },
+											'Male'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'F' },
+											'Female'
+										)
+									),
+									_react2.default.createElement('br', null)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'pull-left' },
+									_react2.default.createElement(
+										'label',
+										{ htmlFor: 'animalSize' },
+										'Size '
+									),
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', id: 'animalSize', ref: 'size', required: true },
+										_react2.default.createElement('option', { value: '' }),
+										_react2.default.createElement(
+											'option',
+											{ value: 'S' },
+											'Small'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'M' },
+											'Medium'
+										),
+										_react2.default.createElement(
+											'option',
+											{ value: 'L' },
+											'Large'
+										)
 									)
-								),
-								_react2.default.createElement('br', null)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-md-3' },
-								_react2.default.createElement(
-									'label',
-									{ htmlFor: 'animalSize' },
-									'Size '
-								),
-								_react2.default.createElement(
-									'select',
-									{ className: 'form-control', id: 'animalSize', ref: 'size', required: true },
-									_react2.default.createElement('option', { value: '' }),
-									_react2.default.createElement(
-										'option',
-										{ value: 'S' },
-										'Small'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'M' },
-										'Medium'
-									),
-									_react2.default.createElement(
-										'option',
-										{ value: 'L' },
-										'Large'
-									)
-								),
-								_react2.default.createElement('br', null)
+								)
 							),
 							_react2.default.createElement(
 								'div',
@@ -22581,6 +22639,7 @@
 		_createClass(Breeds, [{
 			key: 'render',
 			value: function render() {
+				//if mult, then array
 				if (this.state.breeds) {
 					return _react2.default.createElement(
 						'h4',
@@ -22627,17 +22686,16 @@
 			};
 			return _this2;
 		}
+		//once image finished
+	
 	
 		_createClass(PetImage, [{
 			key: 'handleImageLoaded',
 			value: function handleImageLoaded() {
 				this.setState({ imgstatus: 'loaded' });
 			}
-		}, {
-			key: 'handleImageErrored',
-			value: function handleImageErrored() {
-				this.setState({ imgstatus: 'failed to load' });
-			}
+			//handles spinner
+	
 		}, {
 			key: 'renderSpinner',
 			value: function renderSpinner() {
@@ -22663,11 +22721,7 @@
 					'div',
 					null,
 					this.renderSpinner(),
-					_react2.default.createElement('img', {
-						src: newSource,
-						onLoad: this.handleImageLoaded.bind(this),
-						onError: this.handleImageErrored.bind(this),
-						width: '150', height: '150' })
+					_react2.default.createElement('img', { src: newSource, onLoad: this.handleImageLoaded.bind(this), width: '150', height: '150' })
 				);
 			}
 		}]);

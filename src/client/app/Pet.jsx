@@ -15,6 +15,7 @@ class Breeds extends React.Component {
 		}
 	}
    	render() {
+   		//if mult, then array
    		if(this.state.breeds){
 			return (
 				<h4>
@@ -42,12 +43,11 @@ class PetImage extends React.Component {
 			imgstatus: 'loading'
 		};
 	}
+	//once image finished
 	handleImageLoaded() {
 		this.setState({ imgstatus: 'loaded' });
 	}
-	handleImageErrored() {
-		this.setState({ imgstatus: 'failed to load' });
-	}
+	//handles spinner
 	renderSpinner() {
 		if (this.state.imgstatus !== 'loading') {
 			//after image loaded, lets remove spinner
@@ -68,11 +68,7 @@ class PetImage extends React.Component {
         return (
         	<div>
         		{this.renderSpinner()}
-	        	<img 
-	        		src={newSource} 
-	        		onLoad={this.handleImageLoaded.bind(this)}
-	          		onError={this.handleImageErrored.bind(this)} 
-	          		width="150" height="150" />
+	        	<img src={newSource} onLoad={this.handleImageLoaded.bind(this)} width="150" height="150" />
 	       	</div>
 
         )

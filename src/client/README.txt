@@ -19,4 +19,5 @@ const Pet1 = ({pet}) =>
   </tr>
 
 - MUST BE LISTENER NOT "" STRINGS!!!!
-onClick={this.loadPetsFromServer}
+    onClick={this.loadPetsFromServer}
+- no states in render

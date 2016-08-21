@@ -21,9 +21,5 @@
     "less": "^2.5.1",
     "less-loader": "^2.2.0"
 
-  },
-  "devDependencies": {
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3"
   }
 }

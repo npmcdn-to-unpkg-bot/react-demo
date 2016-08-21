@@ -75,6 +75,7 @@
 	    function App() {
 	        _classCallCheck(this, App);
 	
+	        //set initals states
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 	        _this.state = {
@@ -116,12 +117,13 @@
 	                        var newPets = [];
 	                        newPets.push.apply(newPets, _this2.state.data.pet);
 	                        newPets.push.apply(newPets, data.petfinder.pets.pet);
-	                        //set new array to state.pet
+	                        //set new array to state.pet (if data)
 	                        _this2.setState({
 	                            data: Object.assign({ pet: newPets }),
 	                            loaded: true
 	                        });
 	                    } else {
+	                        //set data for first load
 	                        _this2.setState({
 	                            data: data.petfinder.pets,
 	                            loaded: true
@@ -129,7 +131,7 @@
 	                    }
 	                    console.log("this.state.data:");
 	                    console.log(_this2.state.data);
-	                    _this2.forceUpdate();
+	                    //TODO - more on (listener instead?) -> this.forceUpdate();
 	                },
 	                error: function error(xhr, status, err) {
 	                    console.error(_this2.props.url, status, err.toString());
@@ -154,8 +156,17 @@
 	            //spinner until state has value
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'spinner' },
-	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-refresh glyphicon-refresh-animate' })
+	                { className: 'row' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'page-header' },
+	                    _react2.default.createElement('div', { className: 'pet-finder-logo' })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'spinner' },
+	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-refresh glyphicon-refresh-animate' })
+	                )
 	            );
 	        }
 	    }]);
@@ -22119,8 +22130,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22142,19 +22151,22 @@
 				search: '',
 				pets: _this.props.pets
 			};
-	
 			return _this;
 		}
 	
 		_createClass(PetsList, [{
 			key: 'updateSearch',
 			value: function updateSearch(event) {
-				this.setState({ search: event.target.value.substr(0, 20) });
+				//set state of search, used for filteredPet 
+				this.setState({
+					search: event.target.value.substr(0, 20)
+				});
 			}
 		}, {
 			key: 'addPet',
 			value: function addPet(event) {
 				event.preventDefault();
+				//read all the ref attrs
 				var min = 10000000,
 				    max = 39999999;
 				var id = Math.floor(Math.random() * (max - min + 1) + min).toString();
@@ -22165,15 +22177,14 @@
 				var size = this.refs.size.value;
 				var breed = this.refs.breed.value;
 				var description = this.refs.description.value;
-	
 				var contactname = this.refs.contactname.value;
 				var contactemail = this.refs.contactemail.value;
 				var contactcity = this.refs.contactcity.value;
 				var contactzip = this.refs.contactzip.value;
 				var image = "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg";
-	
-				console.log("AddPet - Info: " + id + " " + animal + " " + name + " " + age + " " + sex + " " + size);
-	
+				console.log("AddPet - Info: " + id + " " + animal + " " + name + " " + age + " " + sex + " " + size + " " + breed);
+				console.log("Contact - Info: " + id + " " + contactname + " " + contactemail + " " + contactcity + " " + contactzip);
+				//proper array for combining
 				var newPetArray = {
 					"pet": [{
 						"id": { "$t": id },
@@ -22185,11 +22196,12 @@
 						"breeds": {
 							"breed": { "$t": breed }
 						},
-						"contact": _defineProperty({
+						"contact": {
 							"name": { "$t": contactname },
 							"email": { "$t": contactemail },
-							"city": { "$t": contactcity }
-						}, 'name', { "$t": contactzip }),
+							"city": { "$t": contactcity },
+							"zip": { "$t": contactzip }
+						},
 						"media": {
 							"photos": {
 								"photo": [{
@@ -22210,6 +22222,8 @@
 				this.setState({
 					pets: Object.assign({ pet: newPets })
 				});
+	
+				//resey all the ref attrs
 				this.refs.animal.value = "";
 				this.refs.name.value = "";
 				this.refs.age.value = "";
@@ -22227,18 +22241,38 @@
 				$('html, body').animate({
 					scrollTop: $('#app').offset().top
 				}, 500);
+				//console.log(this.state);
+				//this.setState({ showPetInfo: true });
+			}
+		}, {
+			key: 'autoFillForm',
+			value: function autoFillForm() {
+				this.refs.animal.value = "Cat";
+				this.refs.name.value = "Tom Cat";
+				this.refs.age.value = "Adult";
+				this.refs.sex.value = "M";
+				this.refs.size.value = "L";
+				this.refs.breed.value = "Blue And White Bicolor Domestic Shorthair Cat";
+				this.refs.description.value = "His only notable vocal sounds outside of this are his various screams whenever he is subject to pain or panic. He is continuously after Jerry Mouse, for whom he sets traps, many of which backfire and cause damage to him rather than poor Jerry.";
+				this.refs.contactname.value = "Jerry";
+				this.refs.contactemail.value = "jerry@hannabarbera.com";
+				this.refs.contactcity.value = "New York";
+				this.refs.contactzip.value = "10001";
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var _this2 = this;
 	
+				//map to pet.id array
+				var filteredPets = this.state.pets.pet.filter(
+				//indiv pet - characters of state
+				function (pet) {
+					return pet.id.$t.indexOf(_this2.state.search) !== -1;
+				});
 				//loop thru by pet id
 				console.log("Current State: ");
 				console.log(this.state);
-				var filteredPets = this.state.pets.pet.filter(function (pet) {
-					return pet.id.$t.indexOf(_this2.state.search) !== -1;
-				});
 				return _react2.default.createElement(
 					'div',
 					{ className: 'row' },
@@ -22248,7 +22282,7 @@
 						_react2.default.createElement('div', { className: 'pet-finder-logo' }),
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-md-4 search' },
+							{ className: 'col-md-4 search form-group form-group-lg' },
 							_react2.default.createElement('input', { placeholder: 'Search by Pet #', type: 'text', value: this.state.search, onChange: this.updateSearch.bind(this), className: 'form-control' })
 						)
 					),
@@ -22569,12 +22603,25 @@
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-10' },
+								{ className: 'col-md-10 media' },
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
-									'button',
-									{ type: 'submit', className: 'btn my-btn btn-lg btn-primary' },
-									'Add New Pet'
+									'span',
+									{ className: 'pull-left' },
+									_react2.default.createElement(
+										'button',
+										{ type: 'submit', className: 'btn my-btn btn-lg btn-primary' },
+										'Add New Pet'
+									)
+								),
+								_react2.default.createElement(
+									'span',
+									{ className: 'pull-left' },
+									_react2.default.createElement(
+										'button',
+										{ type: 'button', className: 'btn btn-lg btn-default', onClick: this.autoFillForm.bind(this) },
+										'AutoFill'
+									)
 								)
 							)
 						)
@@ -22712,7 +22759,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				//lets clean up the image url, CANNOT USE SET STATE in render 
+				//lets clean up the image url, CANNOT USE SET STATE in render..
 				if (this.state.imgsrc) {
 					var newSource = this.state.imgsrc;
 					newSource = newSource.substring(0, newSource.length - 18).concat(".jpg");

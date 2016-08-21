@@ -60,7 +60,7 @@ class PetImage extends React.Component {
 		);
 	}
 	render() {
-		//lets clean up the image url, CANNOT USE SET STATE in render 
+		//lets clean up the image url, CANNOT USE SET STATE in render..
 		if(this.state.imgsrc){
 			var newSource = this.state.imgsrc;
 			newSource = newSource.substring(0, newSource.length - 18).concat(".jpg");

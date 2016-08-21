@@ -9,16 +9,19 @@ class PetsList extends React.Component {
     	this.state = {
             search: '',
             pets: this.props.pets
-    	}
-        
+    	}  
     }
 
     updateSearch(event) {
-        this.setState({search: event.target.value.substr(0, 20)});
+    	//set state of search, used for filteredPet 
+        this.setState({
+        	search: event.target.value.substr(0, 20)
+        });
     }
 
     addPet(event) {
 		event.preventDefault();
+		//read all the ref attrs
 		var min=10000000, max=39999999;
 		let id = Math.floor(Math.random() * (max - min + 1) + min).toString();
 		let animal = this.refs.animal.value;
@@ -28,16 +31,16 @@ class PetsList extends React.Component {
 		let size = this.refs.size.value;
 		let breed = this.refs.breed.value;
 		let description = this.refs.description.value;
-
 		let contactname = this.refs.contactname.value;
         let contactemail = this.refs.contactemail.value;
         let contactcity = this.refs.contactcity.value;
         let contactzip = this.refs.contactzip.value;
 		let image = "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg";
-		
 		console.log("AddPet - Info: " + id + " " + animal + " " +
-			name + " " + age + " " + sex + " " + size )
-		
+			name + " " + age + " " + sex + " " + size + " " + breed);
+		console.log("Contact - Info: " + id + " " + contactname + " " +
+			contactemail + " " + contactcity + " " + contactzip);
+		//proper array for combining
 		var newPetArray = {
 			"pet":[{
 				"id":{"$t":id},
@@ -53,7 +56,7 @@ class PetsList extends React.Component {
                		"name":{"$t":contactname},
                		"email":{"$t":contactemail},
                		"city":{"$t":contactcity},
-               		"name":{"$t":contactzip}
+               		"zip":{"$t":contactzip}
                	},
                	"media":{  
                		"photos":{  
@@ -75,6 +78,8 @@ class PetsList extends React.Component {
 		this.setState({
 			pets: Object.assign({pet: newPets})
         });
+
+        //resey all the ref attrs
         this.refs.animal.value = "";
         this.refs.name.value = "";
         this.refs.age.value = "";
@@ -92,23 +97,41 @@ class PetsList extends React.Component {
         $('html, body').animate({
 			scrollTop: $('#app').offset().top
         }, 500);
+        //console.log(this.state);
+        //this.setState({ showPetInfo: true });
+	}
+	autoFillForm(){
+		this.refs.animal.value = "Cat";
+        this.refs.name.value = "Tom Cat";
+        this.refs.age.value = "Adult";
+        this.refs.sex.value = "M";
+        this.refs.size.value = "L";
+        this.refs.breed.value = "Blue And White Bicolor Domestic Shorthair Cat";
+        this.refs.description.value = "His only notable vocal sounds outside of this are his various screams whenever he is subject to pain or panic. He is continuously after Jerry Mouse, for whom he sets traps, many of which backfire and cause damage to him rather than poor Jerry.";
+        this.refs.contactname.value = "Jerry";
+        this.refs.contactemail.value = "jerry@hannabarbera.com";
+        this.refs.contactcity.value = "New York";
+        this.refs.contactzip.value = "10001";
 	}
 
     render() {
-    	//loop thru by pet id
-    	console.log("Current State: ");
-    	console.log(this.state);
+    	//map to pet.id array
         let filteredPets = this.state.pets.pet.filter(
+        	//indiv pet - characters of state
             (pet) => {
                 return pet.id.$t.indexOf(this.state.search) !== -1;
             }
         );
+        //loop thru by pet id
+    	console.log("Current State: ");
+    	console.log(this.state);
         return (
             <div className="row">
             	{/* Pet Finder Header */}
            		<div className="page-header">
                     <div className="pet-finder-logo"></div>
-                    <div className="col-md-4 search">
+                    <div className="col-md-4 search form-group form-group-lg">
+                    	{/* onchange state.search */}
                     	<input placeholder="Search by Pet #" type="text" value={this.state.search} onChange={this.updateSearch.bind(this)} className="form-control"/>
                		</div>
                 </div>
@@ -132,7 +155,7 @@ class PetsList extends React.Component {
 	                    })}
 	                </table>
 					<button type="button" onClick={this.props.loadPetsFromServer} className="btn my-btn btn-lg btn-primary">Load More</button>
-            </div>
+            	</div>
 
 
             	{/* Add Pet Form */}
@@ -241,9 +264,14 @@ class PetsList extends React.Component {
 								</select>
 							</div>
 						</div>
-						<div className="col-md-10">
+						<div className="col-md-10 media">
 							<br />
-							<button type="submit" className="btn my-btn btn-lg btn-primary">Add New Pet</button>
+							<span className="pull-left">
+								<button type="submit" className="btn my-btn btn-lg btn-primary">Add New Pet</button>
+							</span>
+							<span className="pull-left">
+							<button type="button" className="btn btn-lg btn-default" onClick={this.autoFillForm.bind(this)}>AutoFill</button>
+							</span>
 						</div>
 					</form>
 		        </div>

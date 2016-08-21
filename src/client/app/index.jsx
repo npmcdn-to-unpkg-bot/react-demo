@@ -7,6 +7,7 @@ import PetsList from './PetsList.jsx';
 class App extends React.Component {
     constructor() {
         super();
+        //set initals states
         this.state = {
             loaded: false,
             data: [] 
@@ -39,14 +40,13 @@ class App extends React.Component {
                     var newPets = [];
                     newPets.push.apply(newPets, this.state.data.pet);
                     newPets.push.apply(newPets, data.petfinder.pets.pet);
-                    //set new array to state.pet
+                    //set new array to state.pet (if data)
                     this.setState({
                         data: Object.assign({pet: newPets}),
                         loaded: true
-                    });
-                    
-                    
+                    });     
                 } else {
+                    //set data for first load
                     this.setState({
                         data: data.petfinder.pets,
                         loaded: true
@@ -54,20 +54,18 @@ class App extends React.Component {
                 }
                 console.log("this.state.data:");
                 console.log(this.state.data);
-                this.forceUpdate();
+                //TODO - more on (listener instead?) -> this.forceUpdate();
             },
                 error: (xhr, status, err) => {
                 console.error(this.props.url, status, err.toString());
             }
         });
     }
-
     componentDidMount() {
         this.loadPetsFromServer();
         //not sure about interval here, but in every doc
         //setInterval(this.loadPetsFromServer, this.props.pollInterval);
     }
-
     render(){
         console.log("this.state.loaded: " + this.state.loaded);
         //load page after stat has value
@@ -78,8 +76,14 @@ class App extends React.Component {
         }
         //spinner until state has value
         return (
-            <div className="spinner">
-                <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            <div className="row">
+                {/* TEMP HEADER */}
+                <div className="page-header">
+                    <div className="pet-finder-logo"></div>
+                </div>
+                <div className="spinner">
+                    <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                </div>
             </div>
         )
         

@@ -16,26 +16,23 @@ body {
 }
 .pet-finder-logo {
 	background-image: url(../img/petfinderlogo.gif);
-	height: 39px;
-	width: 159px;
+	height: 106px;
+	width: 300px;
 	display: inline-block;
   float:left;
 }
 .search {
 	float:left;
-  margin-top:4px;
+  margin:34px 0 0 40px;
+  padding: 0;
 }
 
-.pet-table {
-  //max-height: 300px;
-  //overflow-y: scroll;
-}
 
 /* SPINNER */
 .spinner {
 	width: 100px;
 	height: 100px;
-	margin:200px auto;
+	margin:0 auto;
 }
 .glyphicon-refresh-animate {
 	font-size:75px;
@@ -54,7 +51,15 @@ body {
     to { transform: scale(1) rotate(360deg);}
 }
 
-/* TABLE FIX*/
+/* TABLE FIXS*/
+.pet-table table.custom-tbody tbody tr:first-child,
+.pet-table table.custom-tbody thead {
+  font-size:18px;
+}
+.pet-table table.custom-tbody tbody tr:first-child td {
+  line-height: 38px;
+}
+
 .custom-tbody.table>tbody+tbody {
   border-top: 1px solid #DDD;
 }
@@ -110,6 +115,7 @@ a.breakdown-toggle {
   border-radius: 50%;
   z-index: 100;
   color:#7130D2;
+  background-color: #fff;
   transition: background-color 0.5s ease;
 }
 a.breakdown-toggle.open-chevron {

@@ -1,7 +1,5 @@
 ==========
-
 # React Pet Finder Demo
-----
 
 ## SETUP:
 - Run npm install

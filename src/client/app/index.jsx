@@ -2,8 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import PetsList from './PetsList.jsx';
 
-
-
+//App - Main Parent - Load Data / Build pets
 class App extends React.Component {
     constructor() {
         super();
@@ -22,9 +21,11 @@ class App extends React.Component {
         var randomZips = ["60192","90210","10001","73301","60067", "97001", "32003"];
         requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
         requestParams.format = this.props.format;
+        //api cleanup
         var esc = encodeURIComponent,
             query = Object.keys(requestParams).map(k => esc(k) + '=' + esc(requestParams[k])).join('&'),
             url = this.props.uri + query;
+
         //if function called from child, lets add to array
         if(this.state.loaded){
              this.setState({
@@ -68,7 +69,7 @@ class App extends React.Component {
     }
     render(){
         console.log("this.state.loaded: " + this.state.loaded);
-        //load page after stat has value
+        //load page after state has value
         if(this.state.loaded){
             return (
                 <PetsList pets={this.state.data} loadPetsFromServer={this.loadPetsFromServer.bind(this)}/>

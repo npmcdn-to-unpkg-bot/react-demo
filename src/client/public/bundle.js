@@ -69,6 +69,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	//App - Main Parent - Load Data / Build pets
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
 	
@@ -97,11 +98,13 @@
 	            var randomZips = ["60192", "90210", "10001", "73301", "60067", "97001", "32003"];
 	            requestParams.location = randomZips[Math.floor(Math.random() * randomZips.length)];
 	            requestParams.format = this.props.format;
+	            //api cleanup
 	            var esc = encodeURIComponent,
 	                query = Object.keys(requestParams).map(function (k) {
 	                return esc(k) + '=' + esc(requestParams[k]);
 	            }).join('&'),
 	                url = this.props.uri + query;
+	
 	            //if function called from child, lets add to array
 	            if (this.state.loaded) {
 	                this.setState({
@@ -149,7 +152,7 @@
 	        key: 'render',
 	        value: function render() {
 	            console.log("this.state.loaded: " + this.state.loaded);
-	            //load page after stat has value
+	            //load page after state has value
 	            if (this.state.loaded) {
 	                return _react2.default.createElement(_PetsList2.default, { pets: this.state.data, loadPetsFromServer: this.loadPetsFromServer.bind(this) });
 	            }
@@ -22159,7 +22162,7 @@
 			value: function updateSearch(event) {
 				//set state of search, used for filteredPet 
 				this.setState({
-					search: event.target.value.substr(0, 20)
+					search: event.target.value
 				});
 			}
 		}, {
@@ -22270,6 +22273,7 @@
 				function (pet) {
 					return pet.id.$t.indexOf(_this2.state.search) !== -1;
 				});
+	
 				//loop thru by pet id
 				console.log("Current State: ");
 				console.log(this.state);
@@ -22662,6 +22666,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	//Breeds - Child - Pet Breed Breakdown
 	var Breeds = function (_React$Component) {
 		_inherits(Breeds, _React$Component);
 	
@@ -22719,6 +22724,8 @@
 	
 	;
 	
+	//PetImage - Child - Pet Image
+	
 	var PetImage = function (_React$Component2) {
 		_inherits(PetImage, _React$Component2);
 	
@@ -22759,7 +22766,8 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				//lets clean up the image url, CANNOT USE SET STATE in render..
+				//lets clean up the image url
+				//(CANNOT USE SET STATE in render)
 				if (this.state.imgsrc) {
 					var newSource = this.state.imgsrc;
 					newSource = newSource.substring(0, newSource.length - 18).concat(".jpg");
@@ -22775,6 +22783,9 @@
 	
 		return PetImage;
 	}(_react2.default.Component);
+	
+	//PetInfo - Child - Indiv Pet Breakdown Info
+	
 	
 	var PetInfo = function (_React$Component3) {
 		_inherits(PetInfo, _React$Component3);
@@ -22855,6 +22866,8 @@
 	
 	;
 	
+	//Pet - Parent - Pet Breakdown
+	
 	var Pet = function (_React$Component4) {
 		_inherits(Pet, _React$Component4);
 	
@@ -22879,6 +22892,8 @@
 				} else {
 					this.setState({ showPetInfo: true });
 				}
+				console.log("this.state.showPetInfo: ");
+				console.log(this.state.showPetInfo);
 			}
 		}, {
 			key: 'render',

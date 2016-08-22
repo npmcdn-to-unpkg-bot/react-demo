@@ -15,7 +15,7 @@ class PetsList extends React.Component {
     updateSearch(event) {
     	//set state of search, used for filteredPet 
         this.setState({
-        	search: event.target.value.substr(0, 20)
+        	search: event.target.value
         });
     }
 
@@ -122,6 +122,7 @@ class PetsList extends React.Component {
                 return pet.id.$t.indexOf(this.state.search) !== -1;
             }
         );
+
         //loop thru by pet id
     	console.log("Current State: ");
     	console.log(this.state);
@@ -158,7 +159,7 @@ class PetsList extends React.Component {
             	</div>
 
 
-            	{/* Add Pet Form */}
+            	{/* Add Pet Form (SHOULD BE OWN COMPONENT) */}
                 <div className="col-md-10 page-header">
                 	<br /><br /><br /><br />
 		            <h1>Pet Entry</h1>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Breeds - Child - Pet Breed Breakdown
 class Breeds extends React.Component {
 	constructor(props) {
 		super(props);
@@ -35,6 +36,7 @@ class Breeds extends React.Component {
     }
 };
 
+//PetImage - Child - Pet Image
 class PetImage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -60,7 +62,8 @@ class PetImage extends React.Component {
 		);
 	}
 	render() {
-		//lets clean up the image url, CANNOT USE SET STATE in render..
+		//lets clean up the image url
+		//(CANNOT USE SET STATE in render)
 		if(this.state.imgsrc){
 			var newSource = this.state.imgsrc;
 			newSource = newSource.substring(0, newSource.length - 18).concat(".jpg");
@@ -75,6 +78,7 @@ class PetImage extends React.Component {
     }
 }
 
+//PetInfo - Child - Indiv Pet Breakdown Info
 class PetInfo extends React.Component {
 	constructor(props) {
 		super(props);
@@ -89,6 +93,7 @@ class PetInfo extends React.Component {
 	               	</span>
 	               	<span className="col-md-7">
 	               		<h2>{this.props.pet.name.$t} - id#{this.props.pet.id.$t}</h2>
+	               		{/* Breed Breakdowns */}
 	               		<Breeds pet={this.props.pet}/>
 	               		<p>{this.props.pet.description.$t}</p>
 	               	</span>
@@ -108,6 +113,7 @@ class PetInfo extends React.Component {
     }
 };
 
+//Pet - Parent - Pet Breakdown
 class Pet extends React.Component {
     constructor(props) {
         super(props);
@@ -123,6 +129,8 @@ class Pet extends React.Component {
     	} else {
         	this.setState({ showPetInfo: true });
         }
+        console.log("this.state.showPetInfo: ");
+        console.log(this.state.showPetInfo);
     }
     render() {
     	//messing around with toggle classes

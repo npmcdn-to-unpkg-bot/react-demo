@@ -1,5 +1,5 @@
 # React Pet Finder Demo
----
+<p> Small demo to understand the basic setup of an app built in React. About building components and applications with React and understand the benefits of its modularity.</p>
 
 ## SETUP:
 - Run npm install

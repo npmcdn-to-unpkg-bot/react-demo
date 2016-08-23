@@ -1,8 +1,12 @@
 {
   "name": "react-search-web-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "First stab at react using PetFinder Api",
+  "author": "Scott Sullivan",
+  "bugs": {
+    "url": "https://github.com/ssulivan11/react-demo/issues"
+  },
+  "main": "index.jsx",
   "scripts": {
     "dev": "webpack -d --watch",
     "build": "webpack -p"
@@ -10,12 +14,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-loader": "^6.2.4",
+    "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "webpack": "^1.13.1",
-    "jquery": "1.5.1"
-  }
+    "jquery": "1.11.1",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "webpack": "^1.13.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssulivan11/react-demo.git"
+  },
+  "keywords": [
+    "Demo",
+    "Flux",
+    "React"
+  ],
+  "homepage": "https://github.com/ssulivan11/react-demo#README"
 }
